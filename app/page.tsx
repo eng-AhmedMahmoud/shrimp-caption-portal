@@ -451,18 +451,14 @@ export default function Home() {
 
   return (
     <main className="relative">
-      {/* Fixed video background for the entire page with subtle parallax */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
+      {/* Fixed video background covering entire viewport */}
+      <div className="fixed inset-0 z-0">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="absolute inset-0 min-h-[120vh] min-w-full object-cover"
-          style={{
-            top: "-10vh",
-            willChange: "transform",
-          }}
+          className="h-full w-full object-cover"
         >
           <source src="/videos/ocean-hero.mp4" type="video/mp4" />
         </video>

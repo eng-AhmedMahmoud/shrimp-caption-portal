@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "شرمب كابشن | بوابة التسليم",
   description:
     "منصة توصيل الروبيان الفاخر في المملكة العربية السعودية - بوابة التسليم لمشروع شرمب كابشن",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
