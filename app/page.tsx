@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
@@ -8,20 +8,25 @@ import {
   LayoutDashboard,
   ChevronDown,
   ExternalLink,
-  LogIn,
-  Package,
-  FolderTree,
-  Star,
-  Users,
   ShoppingCart,
   Smartphone,
   Languages,
   Image as ImageIcon,
-  Video,
+  Star,
+  Users,
+  Package,
+  FolderTree,
   Upload,
   ArrowLeft,
-  Shield,
-  GripVertical,
+  MapPin,
+  Eye,
+  ShoppingBag,
+  MessageCircle,
+  Truck,
+  LogIn,
+  Settings,
+  CheckCircle,
+  Send,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -70,26 +75,6 @@ function useParallaxScroll() {
 function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Video background with parallax */}
-      <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute w-full h-full object-cover"
-          style={{
-            transform: "translateY(calc(var(--scroll) * 0.3px))",
-            willChange: "transform",
-          }}
-        >
-          <source src="/videos/ocean-hero.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* Dark overlay */}
-      <div className="absolute inset-0 z-[1] bg-black/60" />
-
       <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -154,58 +139,7 @@ function HeroSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section 2: Video Parallax Interstitial                             */
-/* ------------------------------------------------------------------ */
-
-function VideoInterstitialSection() {
-  return (
-    <section className="relative h-[60vh] sm:h-[70vh] flex items-center justify-center overflow-hidden">
-      {/* Video background with parallax */}
-      <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute w-full h-full object-cover"
-          style={{
-            transform: "translateY(calc((var(--scroll) - 800) * 0.2px))",
-            willChange: "transform",
-          }}
-        >
-          <source src="/videos/shrimp-cooking.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* Dark overlay */}
-      <div className="absolute inset-0 z-[1] bg-black/65" />
-
-      <div className="relative z-10 flex flex-col items-center gap-4 px-6 text-center">
-        <motion.p
-          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white max-w-3xl leading-relaxed"
-          variants={fadeIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          نقدم أفضل أنواع الروبيان الطازج والمجمد مباشرة إلى باب منزلك
-        </motion.p>
-        <motion.p
-          className="text-base sm:text-lg text-gray-300 mt-4"
-          variants={fadeIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          جودة عالية &bull; توصيل سريع &bull; حلال معتمد
-        </motion.p>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Section 3: Platform Overview                                       */
+/*  Section 2: Platform Overview                                       */
 /* ------------------------------------------------------------------ */
 
 function PlatformOverviewSection() {
@@ -243,7 +177,7 @@ function PlatformOverviewSection() {
   ];
 
   return (
-    <section className="py-24 px-6">
+    <section className="relative py-24 px-6">
       <div className="mx-auto max-w-6xl">
         <motion.h2
           className="text-center text-4xl font-bold mb-4"
@@ -274,10 +208,10 @@ function PlatformOverviewSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-80px" }}
-                className={`rounded-2xl border p-8 backdrop-blur-sm transition-shadow hover:shadow-xl ${
+                className={`rounded-2xl border p-8 backdrop-blur-md bg-gray-950/70 transition-shadow hover:shadow-xl ${
                   isTeal
-                    ? "border-teal-800/50 bg-teal-950/30 hover:shadow-teal-900/20"
-                    : "border-amber-800/50 bg-amber-950/30 hover:shadow-amber-900/20"
+                    ? "border-teal-800/50 hover:shadow-teal-900/20"
+                    : "border-amber-800/50 hover:shadow-amber-900/20"
                 }`}
               >
                 <div className="mb-6 flex items-center gap-3">
@@ -335,47 +269,31 @@ function PlatformOverviewSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section 4: Dashboard Guide                                         */
+/*  Section 3: User Flow Maps                                          */
 /* ------------------------------------------------------------------ */
 
-function DashboardGuideSection() {
-  const steps = [
-    {
-      num: 1,
-      title: "تسجيل الدخول",
-      description: "سجّل دخولك بحساب المسؤول",
-      icon: LogIn,
-    },
-    {
-      num: 2,
-      title: "المنتجات",
-      description: "أضف وعدّل واحذف المنتجات مع الصور والفيديو",
-      icon: Package,
-    },
-    {
-      num: 3,
-      title: "الفئات",
-      description: "نظّم المنتجات في فئات مع السحب لإعادة الترتيب",
-      icon: GripVertical,
-    },
-    {
-      num: 4,
-      title: "التقييمات",
-      description:
-        "أدر تقييمات العملاء، وافق أو ارفض، أضف صور المراجعين",
-      icon: Star,
-    },
-    {
-      num: 5,
-      title: "المستخدمون",
-      description: "أدر حسابات المسؤولين والمحررين",
-      icon: Shield,
-    },
+function UserFlowSection() {
+  const customerSteps = [
+    { icon: MapPin, label: "زيارة الموقع" },
+    { icon: Eye, label: "تصفح القائمة" },
+    { icon: ImageIcon, label: "عرض تفاصيل المنتج" },
+    { icon: ShoppingBag, label: "اختيار المنتج" },
+    { icon: MessageCircle, label: "الطلب عبر واتساب" },
+    { icon: Truck, label: "التوصيل" },
+  ];
+
+  const adminSteps = [
+    { icon: LogIn, label: "تسجيل الدخول" },
+    { icon: Package, label: "إدارة المنتجات" },
+    { icon: Star, label: "إدارة التقييمات" },
+    { icon: Settings, label: "مراجعة المحتوى" },
+    { icon: CheckCircle, label: "الموافقة والنشر" },
+    { icon: Send, label: "النشر على الموقع" },
   ];
 
   return (
-    <section className="py-24 px-6 bg-gray-950/50">
-      <div className="mx-auto max-w-5xl">
+    <section className="relative py-24 px-6">
+      <div className="mx-auto max-w-6xl">
         <motion.h2
           className="text-center text-4xl font-bold mb-4"
           variants={fadeIn}
@@ -383,65 +301,111 @@ function DashboardGuideSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          دليل لوحة التحكم
+          مسار المستخدم
         </motion.h2>
         <motion.div
-          className="mx-auto mb-16 h-1 w-20 rounded-full bg-gradient-to-r from-amber-400 to-amber-300"
+          className="mx-auto mb-16 h-1 w-20 rounded-full bg-gradient-to-r from-teal-500 to-cyan-400"
           variants={fadeIn}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {steps.map((step, idx) => {
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.num}
-                custom={idx}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                className="group relative rounded-2xl border border-gray-800 bg-gray-900/60 p-6 transition-all hover:border-teal-700/50 hover:bg-gray-900/80"
-              >
-                {/* Number badge */}
-                <div className="mb-4 flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-600 text-lg font-bold text-white shadow-lg shadow-teal-600/20">
-                    {step.num}
-                  </span>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-800 text-teal-400 transition-colors group-hover:bg-teal-900/40">
-                    <Icon className="h-5 w-5" />
-                  </div>
+        {/* Customer Journey */}
+        <motion.div
+          className="mb-16"
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <h3 className="text-xl font-semibold text-teal-400 mb-8 text-center">
+            رحلة العميل
+          </h3>
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-0">
+            {customerSteps.map((step, idx) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.label} className="flex items-center">
+                  <motion.div
+                    custom={idx}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-teal-700/50 bg-teal-950/50 text-teal-400 backdrop-blur-sm">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <span className="text-xs text-gray-400 text-center max-w-[80px]">
+                      {step.label}
+                    </span>
+                  </motion.div>
+                  {idx < customerSteps.length - 1 && (
+                    <div className="mx-2 hidden md:block text-teal-600">←</div>
+                  )}
                 </div>
+              );
+            })}
+          </div>
+        </motion.div>
 
-                <h3 className="mb-2 text-xl font-semibold">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
-                  {step.description}
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
+        {/* Admin Journey */}
+        <motion.div
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          <h3 className="text-xl font-semibold text-amber-400 mb-8 text-center">
+            مسار المسؤول
+          </h3>
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-0">
+            {adminSteps.map((step, idx) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.label} className="flex items-center">
+                  <motion.div
+                    custom={idx}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-700/50 bg-amber-950/50 text-amber-400 backdrop-blur-sm">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <span className="text-xs text-gray-400 text-center max-w-[80px]">
+                      {step.label}
+                    </span>
+                  </motion.div>
+                  {idx < adminSteps.length - 1 && (
+                    <div className="mx-2 hidden md:block text-amber-600">←</div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section 5: Footer                                                  */
+/*  Footer                                                             */
 /* ------------------------------------------------------------------ */
 
 function Footer() {
   return (
-    <footer className="border-t border-gray-800 bg-gray-950 py-12 px-6">
+    <footer className="relative border-t border-gray-800 py-12 px-6">
       <div className="mx-auto max-w-6xl text-center">
         <p className="mb-4 text-sm text-gray-400">
-          تم التطوير باستخدام{" "}
-          <span className="text-gray-300 font-medium">Next.js</span> و{" "}
-          <span className="text-gray-300 font-medium">NestJS</span> و{" "}
-          <span className="text-gray-300 font-medium">Cloudflare</span>
+          تم التطوير بكل ❤️ من فريق{" "}
+          <span className="text-teal-400 font-semibold">Sindo Media</span>{" "}
+          التقني
         </p>
 
         <div className="mb-6 flex items-center justify-center gap-6">
@@ -480,12 +444,32 @@ export default function Home() {
   useParallaxScroll();
 
   return (
-    <main>
-      <HeroSection />
-      <VideoInterstitialSection />
-      <PlatformOverviewSection />
-      <DashboardGuideSection />
-      <Footer />
+    <main className="relative">
+      {/* Fixed video background for the entire page with parallax */}
+      <div className="fixed inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-cover"
+          style={{
+            transform: "translateY(calc(var(--scroll) * 0.15px))",
+            willChange: "transform",
+          }}
+        >
+          <source src="/videos/ocean-hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/65" />
+      </div>
+
+      {/* Content sits above the fixed video */}
+      <div className="relative z-10">
+        <HeroSection />
+        <PlatformOverviewSection />
+        <UserFlowSection />
+        <Footer />
+      </div>
     </main>
   );
 }
