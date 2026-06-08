@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+:root {
+  --background: #030712;
+  --foreground: #f3f4f6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-teal: #0d9488;
+  --color-teal-light: #14b8a6;
+  --color-teal-dark: #0f766e;
+  --color-amber: #f59e0b;
+  --color-amber-light: #fbbf24;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    #030712,
+    #0f172a,
+    #0d3d38,
+    #0f172a,
+    #030712
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+@keyframes flow-line {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
