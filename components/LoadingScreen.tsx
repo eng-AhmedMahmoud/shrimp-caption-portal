@@ -3,16 +3,17 @@
 import { useState, useEffect } from "react";
 
 export default function LoadingScreen() {
-  const [visible, setVisible] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const timer = setTimeout(() => setFadeOut(true), 800);
-    const hideTimer = setTimeout(() => setVisible(false), 1200);
+    const hideTimer = setTimeout(() => setMounted(false), 1200);
     return () => { clearTimeout(timer); clearTimeout(hideTimer); };
   }, []);
 
-  if (!visible) return null;
+  if (!mounted) return null;
 
   return (
     <div
