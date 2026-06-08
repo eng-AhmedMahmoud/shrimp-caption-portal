@@ -51,22 +51,6 @@ const fadeIn = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Parallax scroll hook                                               */
-/* ------------------------------------------------------------------ */
-
-function useParallaxScroll() {
-  useEffect(() => {
-    function handleScroll() {
-      document.documentElement.style.setProperty(
-        "--scroll",
-        String(window.scrollY)
-      );
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-}
 
 /* ------------------------------------------------------------------ */
 /*  Section 1: Hero with Video Parallax                                */
@@ -118,15 +102,7 @@ function HeroSection() {
             لوحة التحكم
             <ExternalLink className="h-4 w-4" />
           </a>
-          <a
-            href="https://wa.me/966594090097"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-green-600/25 transition-all hover:bg-green-500 hover:shadow-green-500/30 hover:scale-105"
-          >
-            <MessageCircle className="h-5 w-5" />
-            اطلب عبر واتساب
-          </a>
+
         </motion.div>
       </div>
 
@@ -214,10 +190,10 @@ function PlatformOverviewSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-80px" }}
-                className={`rounded-2xl border p-8 backdrop-blur-md bg-gray-950/70 transition-shadow hover:shadow-xl ${
+                className={`rounded-2xl border p-8 backdrop-blur-md bg-gray-950/30 transition-all duration-300 hover:shadow-xl ${
                   isTeal
-                    ? "border-teal-800/50 hover:shadow-teal-900/20"
-                    : "border-amber-800/50 hover:shadow-amber-900/20"
+                    ? "border-teal-600/30 hover:border-teal-400/60 hover:shadow-teal-900/20"
+                    : "border-amber-600/30 hover:border-amber-400/60 hover:shadow-amber-900/20"
                 }`}
               >
                 <div className="mb-6 flex items-center gap-3">
@@ -447,8 +423,6 @@ function Footer() {
 /* ------------------------------------------------------------------ */
 
 export default function Home() {
-  useParallaxScroll();
-
   return (
     <main className="relative">
       {/* Fixed video background covering entire viewport */}
