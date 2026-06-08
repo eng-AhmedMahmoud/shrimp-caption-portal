@@ -24,7 +24,7 @@ export default function LoadingScreen() {
         <img
           src="/images/dark-theme-logo.png"
           alt="Shrimp Caption"
-          className="h-10 w-auto animate-pulse"
+          className="h-16 w-auto animate-pulse"
         />
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-500 [animation-delay:0ms]" />
