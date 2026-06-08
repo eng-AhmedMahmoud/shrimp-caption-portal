@@ -21,15 +21,17 @@ export default function LoadingScreen() {
       }`}
     >
       <div className="flex flex-col items-center gap-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/dark-theme-logo.png"
-          alt="Shrimp Caption"
+          alt="شرمب كابشن"
+          fetchPriority="high"
           className="h-16 w-auto animate-pulse"
         />
         <div className="flex items-center gap-1.5">
-          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-500 [animation-delay:0ms]" />
-          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-500 [animation-delay:150ms]" />
-          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-teal-500 [animation-delay:300ms]" />
+          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-blue-500 [animation-delay:0ms]" />
+          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-blue-500 [animation-delay:150ms]" />
+          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-blue-500 [animation-delay:300ms]" />
         </div>
       </div>
     </div>

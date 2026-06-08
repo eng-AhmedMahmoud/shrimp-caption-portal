@@ -85,14 +85,11 @@ function HeroSection() {
           <Image
             src="/images/dark-theme-logo.png"
             alt="شرمب كابشن"
-            width={200}
-            height={200}
-            className="mb-6"
+            width={300}
+            height={300}
+            className="mb-6 h-auto w-[250px] sm:w-[300px]"
             priority
           />
-          <p className="mt-2 max-w-2xl text-xl sm:text-2xl font-medium text-gray-200 leading-relaxed">
-            منصة توصيل الروبيان الفاخر في المملكة العربية السعودية
-          </p>
         </motion.div>
 
         <motion.div
@@ -120,6 +117,15 @@ function HeroSection() {
             <LayoutDashboard className="h-5 w-5" />
             لوحة التحكم
             <ExternalLink className="h-4 w-4" />
+          </a>
+          <a
+            href="https://wa.me/966594090097"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-green-600/25 transition-all hover:bg-green-500 hover:shadow-green-500/30 hover:scale-105"
+          >
+            <MessageCircle className="h-5 w-5" />
+            اطلب عبر واتساب
           </a>
         </motion.div>
       </div>
@@ -445,16 +451,16 @@ export default function Home() {
 
   return (
     <main className="relative">
-      {/* Fixed video background for the entire page with parallax */}
-      <div className="fixed inset-0 z-0">
+      {/* Fixed video background for the entire page with subtle parallax */}
+      <div className="fixed inset-0 z-0 overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="h-full w-full object-cover"
+          className="absolute inset-0 min-h-[120vh] min-w-full object-cover"
           style={{
-            transform: "translateY(calc(var(--scroll) * 0.15px))",
+            top: "-10vh",
             willChange: "transform",
           }}
         >
