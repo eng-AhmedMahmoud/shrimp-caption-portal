@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
+import LoadingScreen from "@/components/LoadingScreen";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["arabic"],
 });
 
 export const metadata: Metadata = {
-  title: "Shrimp Caption | Client Delivery Portal",
+  title: "شرمب كابشن | بوابة التسليم",
   description:
-    "Premium Shrimp Delivery Platform - Client delivery portal for Shrimp Caption project",
+    "منصة توصيل الروبيان الفاخر في المملكة العربية السعودية - بوابة التسليم لمشروع شرمب كابشن",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -19,8 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
-      <body className="min-h-screen bg-gray-950 text-gray-100 font-sans">
+    <html lang="ar" dir="rtl" className={ibmPlexSansArabic.className}>
+      <body className="min-h-screen bg-gray-950 text-gray-100">
+        <LoadingScreen />
         {children}
       </body>
     </html>

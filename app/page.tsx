@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Globe,
   LayoutDashboard,
@@ -12,17 +14,12 @@ import {
   Star,
   Users,
   ShoppingCart,
-  Eye,
-  MessageCircle,
-  Truck,
-  Settings,
-  CheckCircle,
-  Upload,
-  ArrowRight,
   Smartphone,
   Languages,
-  Image,
+  Image as ImageIcon,
   Video,
+  Upload,
+  ArrowLeft,
   Shield,
   GripVertical,
 } from "lucide-react";
@@ -49,42 +46,69 @@ const fadeIn = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Section 1: Hero                                                    */
+/*  Parallax scroll hook                                               */
+/* ------------------------------------------------------------------ */
+
+function useParallaxScroll() {
+  useEffect(() => {
+    function handleScroll() {
+      document.documentElement.style.setProperty(
+        "--scroll",
+        String(window.scrollY)
+      );
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Section 1: Hero with Video Parallax                                */
 /* ------------------------------------------------------------------ */
 
 function HeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="animated-gradient absolute inset-0 z-0" />
+      {/* Video background with parallax */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute w-full h-full object-cover"
+          style={{
+            transform: "translateY(calc(var(--scroll) * 0.3px))",
+            willChange: "transform",
+          }}
+        >
+          <source src="/videos/ocean-hero.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-      {/* Subtle overlay pattern */}
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(3,7,18,0.4)_100%)]" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 z-[1] bg-black/60" />
 
       <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
+          className="flex flex-col items-center"
         >
-          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-teal-400 to-cyan-300 bg-clip-text text-transparent">
-              Shrimp Caption
-            </span>
-          </h1>
-          <p className="mt-2 text-2xl sm:text-3xl font-semibold text-amber-400/90 tracking-wide" dir="rtl">
-            شرمب كابشن
+          <Image
+            src="/images/dark-theme-logo.png"
+            alt="شرمب كابشن"
+            width={200}
+            height={200}
+            className="mb-6"
+            priority
+          />
+          <p className="mt-2 max-w-2xl text-xl sm:text-2xl font-medium text-gray-200 leading-relaxed">
+            منصة توصيل الروبيان الفاخر في المملكة العربية السعودية
           </p>
         </motion.div>
-
-        <motion.p
-          className="mt-4 max-w-lg text-lg sm:text-xl text-gray-300"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-        >
-          Premium Shrimp Delivery Platform
-        </motion.p>
 
         <motion.div
           className="mt-8 flex flex-col sm:flex-row gap-4"
@@ -99,7 +123,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 rounded-full bg-teal-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-teal-600/25 transition-all hover:bg-teal-500 hover:shadow-teal-500/30 hover:scale-105"
           >
             <Globe className="h-5 w-5" />
-            Visit Website
+            زيارة الموقع
             <ExternalLink className="h-4 w-4" />
           </a>
           <a
@@ -109,7 +133,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 rounded-full border-2 border-amber-400/60 bg-amber-400/10 px-8 py-4 text-lg font-semibold text-amber-300 transition-all hover:bg-amber-400/20 hover:border-amber-400 hover:scale-105"
           >
             <LayoutDashboard className="h-5 w-5" />
-            Open Dashboard
+            لوحة التحكم
             <ExternalLink className="h-4 w-4" />
           </a>
         </motion.div>
@@ -122,7 +146,7 @@ function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}
       >
-        <span className="text-sm tracking-wider uppercase">Scroll</span>
+        <span className="text-sm tracking-wider">استكشف المزيد</span>
         <ChevronDown className="h-6 w-6 bounce-slow" />
       </motion.div>
     </section>
@@ -130,39 +154,90 @@ function HeroSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section 2: Platform Overview                                       */
+/*  Section 2: Video Parallax Interstitial                             */
+/* ------------------------------------------------------------------ */
+
+function VideoInterstitialSection() {
+  return (
+    <section className="relative h-[60vh] sm:h-[70vh] flex items-center justify-center overflow-hidden">
+      {/* Video background with parallax */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute w-full h-full object-cover"
+          style={{
+            transform: "translateY(calc((var(--scroll) - 800) * 0.2px))",
+            willChange: "transform",
+          }}
+        >
+          <source src="/videos/shrimp-cooking.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 z-[1] bg-black/65" />
+
+      <div className="relative z-10 flex flex-col items-center gap-4 px-6 text-center">
+        <motion.p
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white max-w-3xl leading-relaxed"
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          نقدم أفضل أنواع الروبيان الطازج والمجمد مباشرة إلى باب منزلك
+        </motion.p>
+        <motion.p
+          className="text-base sm:text-lg text-gray-300 mt-4"
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          جودة عالية &bull; توصيل سريع &bull; حلال معتمد
+        </motion.p>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Section 3: Platform Overview                                       */
 /* ------------------------------------------------------------------ */
 
 function PlatformOverviewSection() {
   const cards = [
     {
-      title: "Customer Website",
+      title: "موقع العملاء",
       icon: Globe,
       url: "https://www.shrimpcaption.com/",
-      buttonLabel: "Visit Site",
+      buttonLabel: "زيارة الموقع",
       color: "teal",
       features: [
-        { icon: ShoppingCart, label: "Browse Products" },
-        { icon: Languages, label: "Multi-language (AR/EN)" },
-        { icon: Image, label: "Product Details with Gallery & Video" },
-        { icon: Star, label: "Customer Reviews" },
-        { icon: MessageCircle, label: "WhatsApp Ordering" },
-        { icon: Smartphone, label: "Mobile Responsive" },
+        { icon: ShoppingCart, label: "تصفح المنتجات" },
+        { icon: Languages, label: "دعم اللغتين (عربي/إنجليزي)" },
+        { icon: ImageIcon, label: "معرض صور وفيديو للمنتجات" },
+        { icon: Star, label: "تقييمات العملاء" },
+        { icon: Smartphone, label: "الطلب عبر واتساب" },
+        { icon: Smartphone, label: "متوافق مع الجوال" },
       ],
     },
     {
-      title: "Admin Dashboard",
+      title: "لوحة التحكم",
       icon: LayoutDashboard,
       url: "https://dashboard.shrimpcaption.com/",
-      buttonLabel: "Open Dashboard",
+      buttonLabel: "فتح لوحة التحكم",
       color: "amber",
       features: [
-        { icon: Package, label: "Product Management (CRUD)" },
-        { icon: FolderTree, label: "Category Management" },
-        { icon: Star, label: "Review Management & Moderation" },
-        { icon: Users, label: "User Management" },
-        { icon: Upload, label: "Image & Video Upload (Cloudflare)" },
-        { icon: Languages, label: "Multi-language Support (AR/EN)" },
+        { icon: Package, label: "إدارة المنتجات" },
+        { icon: FolderTree, label: "إدارة الفئات" },
+        { icon: Star, label: "إدارة ومراجعة التقييمات" },
+        { icon: Users, label: "إدارة المستخدمين" },
+        { icon: Upload, label: "رفع الصور والفيديو (Cloudflare)" },
+        { icon: Languages, label: "دعم اللغتين" },
       ],
     },
   ];
@@ -177,7 +252,7 @@ function PlatformOverviewSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          Platform Overview
+          نظرة عامة على المنصة
         </motion.h2>
         <motion.div
           className="mx-auto mb-16 h-1 w-20 rounded-full bg-gradient-to-r from-teal-500 to-cyan-400"
@@ -208,7 +283,9 @@ function PlatformOverviewSection() {
                 <div className="mb-6 flex items-center gap-3">
                   <div
                     className={`flex h-12 w-12 items-center justify-center rounded-xl ${
-                      isTeal ? "bg-teal-600/20 text-teal-400" : "bg-amber-600/20 text-amber-400"
+                      isTeal
+                        ? "bg-teal-600/20 text-teal-400"
+                        : "bg-amber-600/20 text-amber-400"
                     }`}
                   >
                     <Icon className="h-6 w-6" />
@@ -217,10 +294,13 @@ function PlatformOverviewSection() {
                 </div>
 
                 <ul className="mb-8 space-y-3">
-                  {card.features.map((f) => {
+                  {card.features.map((f, fIdx) => {
                     const FIcon = f.icon;
                     return (
-                      <li key={f.label} className="flex items-center gap-3 text-gray-300">
+                      <li
+                        key={`${f.label}-${fIdx}`}
+                        className="flex items-center gap-3 text-gray-300"
+                      >
                         <FIcon
                           className={`h-4 w-4 shrink-0 ${
                             isTeal ? "text-teal-400/70" : "text-amber-400/70"
@@ -243,7 +323,7 @@ function PlatformOverviewSection() {
                   }`}
                 >
                   {card.buttonLabel}
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4" />
                 </a>
               </motion.div>
             );
@@ -255,41 +335,40 @@ function PlatformOverviewSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Section 3: Dashboard Guide                                         */
+/*  Section 4: Dashboard Guide                                         */
 /* ------------------------------------------------------------------ */
 
 function DashboardGuideSection() {
   const steps = [
     {
       num: 1,
-      title: "Login",
-      description: "Sign in with admin credentials at dashboard.shrimpcaption.com",
+      title: "تسجيل الدخول",
+      description: "سجّل دخولك بحساب المسؤول",
       icon: LogIn,
     },
     {
       num: 2,
-      title: "Products",
-      description:
-        "Add, edit, delete products with images, multi-image gallery, and video support",
+      title: "المنتجات",
+      description: "أضف وعدّل واحذف المنتجات مع الصور والفيديو",
       icon: Package,
     },
     {
       num: 3,
-      title: "Categories",
-      description: "Organize products into categories with drag-to-reorder",
+      title: "الفئات",
+      description: "نظّم المنتجات في فئات مع السحب لإعادة الترتيب",
       icon: GripVertical,
     },
     {
       num: 4,
-      title: "Reviews",
+      title: "التقييمات",
       description:
-        "Manage customer reviews, approve/reject, add reviewer photos and product images",
+        "أدر تقييمات العملاء، وافق أو ارفض، أضف صور المراجعين",
       icon: Star,
     },
     {
       num: 5,
-      title: "Users",
-      description: "Manage admin and editor accounts with role-based access",
+      title: "المستخدمون",
+      description: "أدر حسابات المسؤولين والمحررين",
       icon: Shield,
     },
   ];
@@ -304,7 +383,7 @@ function DashboardGuideSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          Dashboard Quick Guide
+          دليل لوحة التحكم
         </motion.h2>
         <motion.div
           className="mx-auto mb-16 h-1 w-20 rounded-full bg-gradient-to-r from-amber-400 to-amber-300"
@@ -338,140 +417,13 @@ function DashboardGuideSection() {
                 </div>
 
                 <h3 className="mb-2 text-xl font-semibold">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-gray-400">{step.description}</p>
+                <p className="text-sm leading-relaxed text-gray-400">
+                  {step.description}
+                </p>
               </motion.div>
             );
           })}
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Section 4: User Flow Map                                           */
-/* ------------------------------------------------------------------ */
-
-function FlowStep({
-  icon: Icon,
-  label,
-  color,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  color: "teal" | "amber";
-}) {
-  const isTeal = color === "teal";
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div
-        className={`flex h-14 w-14 items-center justify-center rounded-2xl border ${
-          isTeal
-            ? "border-teal-700/50 bg-teal-900/40 text-teal-400"
-            : "border-amber-700/50 bg-amber-900/40 text-amber-400"
-        }`}
-      >
-        <Icon className="h-6 w-6" />
-      </div>
-      <span className="max-w-[100px] text-center text-xs font-medium text-gray-300 leading-tight">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-function FlowArrow() {
-  return (
-    <div className="flex items-center justify-center text-gray-600 shrink-0">
-      <ArrowRight className="h-5 w-5" />
-    </div>
-  );
-}
-
-function UserFlowSection() {
-  const customerFlow = [
-    { icon: Globe, label: "Visit Website" },
-    { icon: ShoppingCart, label: "Browse Menu" },
-    { icon: Eye, label: "View Product Details" },
-    { icon: Package, label: "Select Product" },
-    { icon: MessageCircle, label: "Order via WhatsApp" },
-    { icon: Truck, label: "Delivery" },
-  ];
-
-  const adminFlow = [
-    { icon: LogIn, label: "Login to Dashboard" },
-    { icon: Package, label: "Manage Products" },
-    { icon: Star, label: "Manage Reviews" },
-    { icon: Settings, label: "Moderate Content" },
-    { icon: CheckCircle, label: "Publish to Website" },
-  ];
-
-  return (
-    <section className="py-24 px-6">
-      <div className="mx-auto max-w-6xl">
-        <motion.h2
-          className="text-center text-4xl font-bold mb-4"
-          variants={fadeIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          Customer Journey
-        </motion.h2>
-        <motion.div
-          className="mx-auto mb-16 h-1 w-20 rounded-full bg-gradient-to-r from-teal-500 to-cyan-400"
-          variants={fadeIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        />
-
-        {/* Customer flow */}
-        <motion.div
-          variants={fadeUp}
-          custom={0}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="mb-12"
-        >
-          <h3 className="mb-6 text-center text-lg font-semibold text-teal-400">
-            Customer Flow
-          </h3>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/40 p-8">
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-              {customerFlow.map((step, idx) => (
-                <div key={step.label} className="contents">
-                  <FlowStep icon={step.icon} label={step.label} color="teal" />
-                  {idx < customerFlow.length - 1 && <FlowArrow />}
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Admin flow */}
-        <motion.div
-          variants={fadeUp}
-          custom={1}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-        >
-          <h3 className="mb-6 text-center text-lg font-semibold text-amber-400">
-            Admin Flow
-          </h3>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/40 p-8">
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-              {adminFlow.map((step, idx) => (
-                <div key={step.label} className="contents">
-                  <FlowStep icon={step.icon} label={step.label} color="amber" />
-                  {idx < adminFlow.length - 1 && <FlowArrow />}
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
@@ -486,9 +438,9 @@ function Footer() {
     <footer className="border-t border-gray-800 bg-gray-950 py-12 px-6">
       <div className="mx-auto max-w-6xl text-center">
         <p className="mb-4 text-sm text-gray-400">
-          Built with{" "}
-          <span className="text-gray-300 font-medium">Next.js</span>,{" "}
-          <span className="text-gray-300 font-medium">NestJS</span>, and{" "}
+          تم التطوير باستخدام{" "}
+          <span className="text-gray-300 font-medium">Next.js</span> و{" "}
+          <span className="text-gray-300 font-medium">NestJS</span> و{" "}
           <span className="text-gray-300 font-medium">Cloudflare</span>
         </p>
 
@@ -499,7 +451,7 @@ function Footer() {
             rel="noopener noreferrer"
             className="text-sm text-gray-400 transition-colors hover:text-teal-400"
           >
-            Website
+            الموقع
           </a>
           <span className="text-gray-700">|</span>
           <a
@@ -508,12 +460,12 @@ function Footer() {
             rel="noopener noreferrer"
             className="text-sm text-gray-400 transition-colors hover:text-amber-400"
           >
-            Dashboard
+            لوحة التحكم
           </a>
         </div>
 
         <p className="text-xs text-gray-500">
-          &copy; 2026 Shrimp Caption. All rights reserved.
+          &copy; ٢٠٢٦ شرمب كابشن. جميع الحقوق محفوظة.
         </p>
       </div>
     </footer>
@@ -525,12 +477,14 @@ function Footer() {
 /* ------------------------------------------------------------------ */
 
 export default function Home() {
+  useParallaxScroll();
+
   return (
     <main>
       <HeroSection />
+      <VideoInterstitialSection />
       <PlatformOverviewSection />
       <DashboardGuideSection />
-      <UserFlowSection />
       <Footer />
     </main>
   );

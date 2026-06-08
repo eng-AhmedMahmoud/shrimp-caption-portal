@@ -3,6 +3,7 @@
 :root {
   --background: #030712;
   --foreground: #f3f4f6;
+  --scroll: 0;
 }
 
 @theme inline {
@@ -13,7 +14,7 @@
   --color-teal-dark: #0f766e;
   --color-amber: #f59e0b;
   --color-amber-light: #fbbf24;
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", sans-serif;
 }
 
 body {
@@ -61,13 +62,11 @@ body {
   animation: bounce-slow 2s ease-in-out infinite;
 }
 
-@keyframes flow-line {
-  0% {
-    stroke-dashoffset: 100;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
+.parallax-container {
+  perspective: 1px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
 }
 
 /* Scrollbar styling */
