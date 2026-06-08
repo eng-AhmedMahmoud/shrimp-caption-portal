@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
@@ -27,6 +28,8 @@ import {
   CheckCircle,
   Send,
   KeyRound,
+  Copy,
+  Check,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -51,6 +54,61 @@ const fadeIn = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  Credentials card                                                   */
+/* ------------------------------------------------------------------ */
+
+function CopyField({ label, value }: { label: string; value: string }) {
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <div className="flex items-center justify-between gap-3 rounded-lg bg-white/5 px-3 py-2">
+      <div className="min-w-0">
+        <span className="text-xs text-gray-500">{label}</span>
+        <p className="truncate font-mono text-sm text-gray-100">{value}</p>
+      </div>
+      <button
+        type="button"
+        onClick={handleCopy}
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+        title="Copy"
+      >
+        {copied ? (
+          <Check className="h-4 w-4 text-emerald-400" />
+        ) : (
+          <Copy className="h-4 w-4" />
+        )}
+      </button>
+    </div>
+  );
+}
+
+function CredentialsCard() {
+  return (
+    <motion.div
+      className="mt-8 w-full max-w-sm rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-lg"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.8, duration: 0.6 }}
+    >
+      <div className="mb-4 flex items-center justify-end gap-2">
+        <KeyRound className="h-4 w-4 text-cyan-400" />
+        <span className="text-sm font-semibold text-cyan-400">
+          بيانات دخول لوحة التحكم
+        </span>
+      </div>
+      <div className="space-y-2" dir="ltr">
+        <CopyField label="Email" value="admin@shrimpcaption.com" />
+        <CopyField label="Password" value="Admin123!" />
+      </div>
+    </motion.div>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Section 1: Hero with Video Parallax                                */
@@ -106,28 +164,7 @@ function HeroSection() {
         </motion.div>
 
         {/* Admin credentials */}
-        <motion.div
-          className="mt-8 rounded-xl border border-amber-400/30 bg-gray-950/40 px-6 py-4 backdrop-blur-md text-start"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          dir="ltr"
-        >
-          <div className="flex items-center gap-2 mb-3">
-            <KeyRound className="h-4 w-4 text-amber-400" />
-            <span className="text-sm font-semibold text-amber-400">بيانات دخول لوحة التحكم</span>
-          </div>
-          <div className="space-y-1.5 text-sm">
-            <p className="text-gray-300">
-              <span className="text-gray-500">Email:</span>{" "}
-              <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-gray-100">admin@shrimpcaption.com</code>
-            </p>
-            <p className="text-gray-300">
-              <span className="text-gray-500">Password:</span>{" "}
-              <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-gray-100">Admin123!</code>
-            </p>
-          </div>
-        </motion.div>
+        <CredentialsCard />
       </div>
 
       {/* Scroll indicator */}
